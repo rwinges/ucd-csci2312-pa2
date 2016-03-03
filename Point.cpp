@@ -179,12 +179,24 @@ namespace Clustering
 //============== OVERLOADED OPERATORS ================================================================================
 	//---------- MEMBERS ---------------------------------------------------------------------------------------------
 
-	Point& Point::operator*=(double d) // p *= 6; p.operator*=(6);
+	Point& Point::operator*=(double multiplier) // p *= 6; p.operator*=(6);
 	{
+		for (int i = 0; i < __dim; ++i)
+			{
+				__values[i] = __values[i] * multiplier;
+			}
+
+		return *this;
 	}
 
-	Point& Point::operator/=(double d)
+	Point& Point::operator/=(double divisor)
 	{
+		for (int i = 0; i < __dim; ++i)
+		{
+			__values[i] = __values[i] / divisor;
+		}
+
+		return *this;
 	}
 
 	const Point Point::operator*(double d) const // prevent (p1 * 2) = p2;
@@ -205,22 +217,65 @@ namespace Clustering
 
 	//---------- FRIENDS ---------------------------------------------------------------------------------------------
 
-	Point& operator+=(Point &point, const Point &point1)
+	Point& operator+=(Point &point1, const Point &point2)
 	{
+		if (point1.getDims() == point2.getDims())
+		{
+			for (int i = 0; i < point1.getDims(); ++i)
+			{
+				point1.setValue(i, point1.getValue(i) + point2.getValue(i));
+			}
+		}
+		else std::cout << "\nERROR: Point::operator+=: Unequal dimensions." << std::endl << std::endl;
+
+		return point1;
 	}
 
-	Point& operator-=(Point &point, const Point &point1)
+	Point& operator-=(Point &point1, const Point &point2)
 	{
+		if (point1.getDims() == point2.getDims())
+		{
+			for (int i = 0; i < point1.getDims(); ++i)
+			{
+				point1.setValue(i, point1.getValue(i) - point2.getValue(i));
+			}
+		}
+		else std::cout << "\nERROR: Point::operator+=: Unequal dimensions." << std::endl << std::endl;
+
+		return point1;
 	}
 
-	const Point operator+(const Point &point, const Point &point1)
+	//---------- + OVERLOADED ADDITION OPERATOR (friend) -------------------------------------------------------------
+	const Point operator+(const Point &point1, const Point &point2)
 	{
-		//return Point(0);
-	}
+		Point newPoint(point1.getDims());
 
-	const Point operator-(const Point &point, const Point &point1)
+		if (point1.getDims() == point2.getDims())
+		{
+			for (int i = 0; i < point1.getDims(); ++i)
+			{
+				newPoint.setValue(i, point1.getValue(i) + point2.getValue(i));
+			}
+		}
+		else std::cout << "\nERROR: Point::operator+: Unequal dimensions." << std::endl << std::endl;
+
+		return newPoint;
+	}
+	//---------- - OVERLOADED SUBTRACTION OPERATOR (friend) ----------------------------------------------------------
+	const Point operator-(const Point &point1, const Point &point2)
 	{
-		//return Point(0);
+		Point newPoint(point1.getDims());
+
+		if (point1.getDims() == point2.getDims())
+		{
+			for (int i = 0; i < point1.getDims(); ++i)
+			{
+				newPoint.setValue(i, point1.getValue(i) - point2.getValue(i));
+			}
+		}
+		else std::cout << "\nERROR: Point::operator-: Unequal dimensions." << std::endl << std::endl;
+
+		return newPoint;
 	}
 
 	//---------- == OVERLOADED EQUALITY OPERATOR (friend) ------------------------------------------------------------
@@ -246,6 +301,7 @@ namespace Clustering
 		return !(point1 == point2);
 	}
 
+	//---------- < OVERLOADED LESS THAN OPERATOR (friend) ------------------------------------------------------------
 	bool operator<(const Point &point1, const Point &point2)
 	{
 		bool lessThan = false;
@@ -262,6 +318,7 @@ namespace Clustering
 		return lessThan;
 	}
 
+	//---------- > OVERLOADED GREATER THAN OPERATOR (friend) ---------------------------------------------------------
 	bool operator>(const Point &point1, const Point &point2)
 	{
 		bool greaterThan = false;
@@ -278,6 +335,7 @@ namespace Clustering
 		return greaterThan;
 	}
 
+	//---------- <= OVERLOADED LESS THAN OR EQUAL TO OPERATOR (friend) -----------------------------------------------
 	bool operator<=(const Point &point1, const Point &point2)
 	{
 		bool lessThanOrEqual = true;
@@ -294,6 +352,7 @@ namespace Clustering
 		return lessThanOrEqual;
 	}
 
+	//---------- >= OVERLOADED GREATER THAN OR EQUAL TO OPERATOR (friend) --------------------------------------------
 	bool operator>=(const Point &point1, const Point &point2)
 	{
 		bool greaterThanOrEqual = true;

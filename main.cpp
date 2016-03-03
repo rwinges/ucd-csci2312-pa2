@@ -37,8 +37,8 @@ int main() {
     test_point_assignment(ec, NumIters);
     test_point_equality(ec, NumIters);
     test_point_comparison(ec, NumIters);
-//    test_point_CAO(ec, NumIters);
-//    test_point_SAO(ec, NumIters);
+    test_point_CAO(ec, NumIters);
+    test_point_SAO(ec, NumIters);
 //    test_point_distance(ec, NumIters);
 //    test_point_IO(ec, NumIters);
 //
