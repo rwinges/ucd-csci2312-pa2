@@ -223,14 +223,27 @@ namespace Clustering
 		//return Point(0);
 	}
 
-	bool operator==(const Point &point, const Point &point1)
+	//---------- == OVERLOADED EQUALITY OPERATOR (friend) ------------------------------------------------------------
+	bool operator==(const Point &point1, const Point &point2)
 	{
-		return false;
+		bool sameness = true;
+
+		if (point1.getId() == point2.getId())
+		{
+			for (int i = 0; sameness && i < point1.getDims(); ++i)
+			{
+				if (point1.getValue(i) != point2.getValue(i)) sameness = false;
+			}
+		}
+		else sameness = false;
+
+		return sameness;
 	}
 
-	bool operator!=(const Point &point, const Point &point1)
+	//---------- != OVERLOADED INEQUALITY OPERATOR (friend) ----------------------------------------------------------
+	bool operator!=(const Point &point1, const Point &point2)
 	{
-		return false;
+		return !(point1 == point2);
 	}
 
 	bool operator<(const Point &point, const Point &point1)
