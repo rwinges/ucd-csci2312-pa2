@@ -246,24 +246,68 @@ namespace Clustering
 		return !(point1 == point2);
 	}
 
-	bool operator<(const Point &point, const Point &point1)
+	bool operator<(const Point &point1, const Point &point2)
 	{
-		return false;
+		bool lessThan = false;
+
+		//If the same point is being compared to itself, there's no need to compare each dimension
+		if (point1.getId() != point2.getId())
+		{
+			for (int i = 0; !lessThan && i < point1.getDims(); ++i)
+			{
+				if (point1.getValue(i) < point2.getValue(i)) lessThan = true;
+			}
+		}
+
+		return lessThan;
 	}
 
-	bool operator>(const Point &point, const Point &point1)
+	bool operator>(const Point &point1, const Point &point2)
 	{
-		return false;
+		bool greaterThan = false;
+
+		//If the same point is being compared to itself, there's no need to compare each dimension
+		if (point1.getId() != point2.getId())
+		{
+			for (int i = 0; !greaterThan && i < point1.getDims(); ++i)
+			{
+				if (point1.getValue(i) > point2.getValue(i)) greaterThan = true;
+			}
+		}
+
+		return greaterThan;
 	}
 
-	bool operator<=(const Point &point, const Point &point1)
+	bool operator<=(const Point &point1, const Point &point2)
 	{
-		return false;
+		bool lessThanOrEqual = true;
+
+		//If the same point is being compared to itself, there's no need to compare each dimension
+		if (point1.getId() != point2.getId())
+		{
+			for (int i = 0; lessThanOrEqual && i < point1.getDims(); ++i)
+			{
+				if (point1.getValue(i) > point2.getValue(i)) lessThanOrEqual = false;
+			}
+		}
+
+		return lessThanOrEqual;
 	}
 
-	bool operator>=(const Point &point, const Point &point1)
+	bool operator>=(const Point &point1, const Point &point2)
 	{
-		return false;
+		bool greaterThanOrEqual = true;
+
+		//If the same point is being compared to itself, there's no need to compare each dimension
+		if (point1.getId() != point2.getId())
+		{
+			for (int i = 0; greaterThanOrEqual && i < point1.getDims(); ++i)
+			{
+				if (point1.getValue(i) < point2.getValue(i)) greaterThanOrEqual = false;
+			}
+		}
+
+		return greaterThanOrEqual;
 	}
 
 	std::ostream& operator<<(std::ostream &ostream, const Point &point)
