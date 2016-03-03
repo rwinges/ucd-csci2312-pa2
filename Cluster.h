@@ -5,18 +5,19 @@
 
 namespace Clustering {
 
-    typedef struct LNode *LNodePtr;
+    typedef struct LNode* LNodePtr;
 
-    struct LNode {
-
+    struct LNode
+    {
         Point point;
         LNodePtr next;
-        LNode(const Point &p, LNodePtr n);
 
+		//Constructor
+        LNode(const Point &p, LNodePtr n);
     };
 
-    class Cluster {
-
+    class Cluster
+	{
         int __size;
         LNodePtr __points;
 
@@ -38,7 +39,7 @@ namespace Clustering {
 
         // Set functions: They allow calling c1.add(c2.remove(p));
         void add(const Point &); // TODO add asc order to the requirements
-        const Point &remove(const Point &);
+        const Point& remove(const Point &);
         bool contains(const Point &);
 
         // Overloaded operators

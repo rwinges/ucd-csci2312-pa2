@@ -3,16 +3,18 @@
 
 #include <iostream>
 
-namespace Clustering {
-
-    class Point {
+namespace Clustering
+{
+    class Point
+    {
         unsigned int __id;
         int __dim;        // number of dimensions of the point
-        double *__values; // values of the point's dimensions
+        double* __values; // values array for the point's dimensions
 
         static unsigned int __idGen; // id generator
 
     public:
+		Point();
         Point(int);
         Point(int, double *);
 
@@ -57,6 +59,5 @@ namespace Clustering {
         friend std::ostream &operator<<(std::ostream &, const Point &);
         friend std::istream &operator>>(std::istream &, Point &);
     };
-
 }
 #endif //CLUSTERING_POINT_H
