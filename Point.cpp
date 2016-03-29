@@ -1,4 +1,8 @@
 #include "Point.h"
+#include <cmath>
+
+using std::sqrt;
+using std::pow;
 
 namespace Clustering
 {
@@ -170,9 +174,20 @@ namespace Clustering
 	}
 
 //============== FUNCTIONS ===========================================================================================
-	double Point::distanceTo(const Point &point) const
+	double Point::distanceTo(const Point &pointB) const
 	{
-		return 0;
+//		double distance = sqrt(pow(pointB.getX()-x,2)
+//							   +pow(pointB.getY()-y,2)
+//							   +pow(pointB.getZ()-z,2));
+
+		double distance = 0;
+
+		for (int i = 0; i < __dim; ++i)
+		{
+			distance += pow(pointB.getValue(i) - __values[i],2);
+		}
+
+		return sqrt(distance);
 	}
 
 
